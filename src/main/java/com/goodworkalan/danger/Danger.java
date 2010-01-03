@@ -7,6 +7,13 @@ import java.util.concurrent.ConcurrentMap;
 
 import com.goodworkalan.notice.message.Message;
 
+/**
+ * Convoluted but, if the pattern has no named parameters, but ordinal
+ * parameters are passed, use ordinal parameters, if they exist, create
+ * them in the hash using $1, $2, $3...
+ * <p>
+ * FIXME Optionally, use arguments?
+ */
 @SuppressWarnings("serial")
 public class Danger extends RuntimeException {
     /** The formatted message. */

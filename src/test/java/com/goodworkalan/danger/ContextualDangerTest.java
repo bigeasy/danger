@@ -23,4 +23,19 @@ public class ContextualDangerTest {
             assertEquals(e.getData().get("a"), "a");
         }
     }
+    
+    /** Test the creation of a contextual exception for a class with no package. */
+    @Test
+    public void createDefault() throws ClassNotFoundException {
+        try {
+            try {
+                throw new IOException();
+            } catch (IOException e) {
+                throw new TestContextualDanger(Class.forName("OutOfContext", true, getClass().getClassLoader()), "danger", e).put("a", "a");
+            }
+        } catch (TestContextualDanger e) {
+            assertEquals(e.getMessage(), "Out of context class.");
+            assertEquals(e.getData().get("a"), "a");
+        }
+    }
 }

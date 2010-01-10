@@ -8,6 +8,12 @@ public class CodedDanger extends Danger {
     /** The error code. */
     private final int code;
     
+    /**
+     * Create a coded danger 
+     * @param bundles
+     * @param code
+     * @param cause
+     */
     public CodedDanger(ConcurrentMap<String, ResourceBundle> bundles, int code, Throwable cause) {
         super(bundles, Integer.toString(code), null);
         this.code = code;

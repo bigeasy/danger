@@ -9,6 +9,7 @@ import org.testng.annotations.Test;
 import com.goodworkalan.danger.test.TestCodedDanger;
 
 public class CodedDangerTest {
+    /** Test the creation of a coded exception. */
     @Test
     public void create() {
         try {

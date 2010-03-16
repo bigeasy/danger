@@ -13,7 +13,7 @@ public class DangerProject extends ProjectModule {
                 .produces(new Artifact("com.github.bigeasy.danger/danger/0.1"))
                 .main()
                     .depends()
-                        .artifact(new Artifact("com.github.bigeasy.notice/notice-message/0.1"))
+                        .artifact(new Artifact("com.github.bigeasy.verbiage/verbiage/0.1"))
                         .end()
                     .end()
                 .test()

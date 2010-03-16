@@ -15,6 +15,7 @@ public class Danger extends RuntimeException {
     /** The map of diagnostic data. */
     private final Map<Object, Object> data;
     
+    // FIXME Need positioned parameters sooner than later.
     public Danger(ConcurrentMap<String, ResourceBundle> bundles, String messageKey, Throwable cause) {
         super(null, cause);
         this.data = new HashMap<Object, Object>(); 

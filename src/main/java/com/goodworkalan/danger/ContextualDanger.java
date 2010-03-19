@@ -20,8 +20,21 @@ import java.util.concurrent.ConcurrentMap;
  */
 @SuppressWarnings("serial")
 public class ContextualDanger extends Danger {
-    public ContextualDanger(ConcurrentMap<String, ResourceBundle> bundles, Class<?> contextClass, String code, Throwable cause) {
-        super(bundles, getMessageKey(contextClass, code), null);
+    /**
+     * Create a contextual exception with the given context class, the given
+     * string error code and the given positioned arguments.
+     * 
+     * @param bundles
+     *            A cache of exception message bundles.
+     * @param context
+     *            The error context.
+     * @param code
+     *            The error code.
+     * @param arguments
+     *            The positioned arguments to the error format string.
+     */
+    public ContextualDanger(ConcurrentMap<String, ResourceBundle> bundles, Class<?> contextClass, String code, Throwable cause, Object...arguments) {
+        super(bundles, getMessageKey(contextClass, code), cause, arguments);
     }
 
     private static String getMessageKey(Class<?> contextClass, String code) {

@@ -14,8 +14,8 @@ public class CodedDanger extends Danger {
      * @param code
      * @param cause
      */
-    public CodedDanger(ConcurrentMap<String, ResourceBundle> bundles, int code, Throwable cause) {
-        super(bundles, Integer.toString(code), null);
+    public CodedDanger(ConcurrentMap<String, ResourceBundle> bundles, int code, Throwable cause, Object...arguments) {
+        super(bundles, Integer.toString(code), cause, arguments);
         this.code = code;
     }
     

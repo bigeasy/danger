@@ -5,7 +5,7 @@ import java.util.Map;
 import java.util.ResourceBundle;
 import java.util.concurrent.ConcurrentMap;
 
-import com.goodworkalan.notice.message.Message;
+import com.goodworkalan.verbiage.Message;
 
 @SuppressWarnings("serial")
 public class Danger extends RuntimeException {

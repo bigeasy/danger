@@ -34,7 +34,7 @@ public class ContextualDanger extends Danger {
      *            The positioned arguments to the error format string.
      */
     public ContextualDanger(ConcurrentMap<String, ResourceBundle> bundles, Class<?> contextClass, String code, Throwable cause, Object...arguments) {
-        super(bundles, getMessageKey(contextClass, code), cause, arguments);
+        super(bundles, contextClass, getMessageKey(contextClass, code), cause, arguments);
     }
 
     private static String getMessageKey(Class<?> contextClass, String code) {

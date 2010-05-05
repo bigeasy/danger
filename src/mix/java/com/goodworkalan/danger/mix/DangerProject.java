@@ -17,7 +17,7 @@ public class DangerProject extends ProjectModule {
                     .end()
                 .test()
                     .depends()
-                        .artifact(new Artifact("org.testng/testng-jdk15/5.10"))
+                        .include("org.testng/testng-jdk15/5.10")
                         .end()
                     .end()
                 .end()

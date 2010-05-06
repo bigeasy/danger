@@ -9,10 +9,10 @@ public class DangerProject extends ProjectModule {
     public void build(Builder builder) {
         builder
             .cookbook(JavaProject.class)
-                .produces("com.github.bigeasy.danger/danger/0.1")
+                .produces("com.github.bigeasy.danger/danger/0.1.0.1")
                 .main()
                     .depends()
-                        .include("com.github.bigeasy.verbiage/verbiage/0.1")
+                        .include("com.github.bigeasy.verbiage/verbiage/0.+1")
                         .end()
                     .end()
                 .test()

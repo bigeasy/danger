@@ -34,7 +34,7 @@ public class ContextualDangerTest {
                 throw new TestContextualDanger(Class.forName("OutOfContext", true, getClass().getClassLoader()), "danger", e).put("a", "a");
             }
         } catch (TestContextualDanger e) {
-            assertEquals(e.getMessage(), "You cannot use a context class that references the default package.");
+            assertEquals(e.getMessage(), "Message bundle context [OutOfContext] resolves to the default package. Message key is [OutOfContext/danger]. (This is a meta error message.)");
             assertEquals(e.getData().get("a"), "a");
         }
     }

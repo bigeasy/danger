@@ -20,6 +20,8 @@ import java.util.concurrent.ConcurrentMap;
  */
 @SuppressWarnings("serial")
 public class ContextualDanger extends Danger {
+    private final String messageKey;
+
     /**
      * Create a contextual exception with the given context class, the given
      * string error code and the given positioned arguments.
@@ -35,6 +37,11 @@ public class ContextualDanger extends Danger {
      */
     public ContextualDanger(ConcurrentMap<String, ResourceBundle> bundles, Class<?> contextClass, String code, Throwable cause, Object...arguments) {
         super(bundles, contextClass, getMessageKey(contextClass, code), cause, arguments);
+        this.messageKey = getMessageKey(contextClass, code);
+    }
+    
+    public String getMessageKey() {
+        return messageKey;
     }
 
     private static String getMessageKey(Class<?> contextClass, String code) {

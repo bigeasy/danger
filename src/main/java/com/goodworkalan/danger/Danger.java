@@ -2,8 +2,6 @@ package com.goodworkalan.danger;
 
 import java.util.HashMap;
 import java.util.Map;
-import java.util.ResourceBundle;
-import java.util.concurrent.ConcurrentMap;
 
 import com.goodworkalan.verbiage.Message;
 
@@ -15,10 +13,10 @@ public class Danger extends RuntimeException {
     /** The map of diagnostic data. */
     private final Map<Object, Object> data;
     
-    public Danger(ConcurrentMap<String, ResourceBundle> bundles, Class<?> bundleContext, String messageKey, Throwable cause, Object...arguments) {
+    public Danger(Class<?> bundleContext, String messageKey, Throwable cause, Object...arguments) {
         super(null, cause);
         this.data = Message.position(new HashMap<Object, Object>(), arguments); 
-        this.message = new Message(bundles, getBundleContext(bundleContext).getCanonicalName(), "exceptions", messageKey, this.data);
+        this.message = new Message(getBundleContext(bundleContext).getCanonicalName(), "exceptions", messageKey, this.data);
     }
     
     private Class<?> getBundleContext(Class<?> bundleContext) {

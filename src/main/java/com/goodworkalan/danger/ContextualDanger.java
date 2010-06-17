@@ -1,7 +1,5 @@
 package com.goodworkalan.danger;
 
-import java.util.ResourceBundle;
-import java.util.concurrent.ConcurrentMap;
 
 /**
  * Good for extensible exceptions, because you can use the class name and
@@ -35,8 +33,8 @@ public class ContextualDanger extends Danger {
      * @param arguments
      *            The positioned arguments to the error format string.
      */
-    public ContextualDanger(ConcurrentMap<String, ResourceBundle> bundles, Class<?> contextClass, String code, Throwable cause, Object...arguments) {
-        super(bundles, contextClass, getMessageKey(contextClass, code), cause, arguments);
+    public ContextualDanger(Class<?> contextClass, String code, Throwable cause, Object...arguments) {
+        super(contextClass, getMessageKey(contextClass, code), cause, arguments);
         this.messageKey = getMessageKey(contextClass, code);
     }
     

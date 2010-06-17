@@ -1,7 +1,5 @@
 package com.goodworkalan.danger;
 
-import java.util.ResourceBundle;
-import java.util.concurrent.ConcurrentMap;
 
 @SuppressWarnings("serial")
 public class CodedDanger extends Danger {
@@ -14,8 +12,8 @@ public class CodedDanger extends Danger {
      * @param code
      * @param cause
      */
-    public CodedDanger(ConcurrentMap<String, ResourceBundle> bundles, int code, Throwable cause, Object...arguments) {
-        super(bundles, null, Integer.toString(code), cause, arguments);
+    public CodedDanger(int code, Throwable cause, Object...arguments) {
+        super(null, Integer.toString(code), cause, arguments);
         this.code = code;
     }
     

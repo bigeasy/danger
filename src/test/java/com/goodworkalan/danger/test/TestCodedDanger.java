@@ -1,9 +1,5 @@
 package com.goodworkalan.danger.test;
 
-import java.util.ResourceBundle;
-import java.util.concurrent.ConcurrentHashMap;
-import java.util.concurrent.ConcurrentMap;
-
 import com.goodworkalan.danger.CodedDanger;
 
 /**
@@ -13,9 +9,6 @@ import com.goodworkalan.danger.CodedDanger;
  */
 @SuppressWarnings("serial")
 public class TestCodedDanger extends CodedDanger {
-    /** The cache of message bundles. */
-    private final static ConcurrentMap<String, ResourceBundle> bundles = new ConcurrentHashMap<String, ResourceBundle>();
-
     /**
      * Construct a test exception that wraps the given cause exception and and
      * the given error code.
@@ -26,6 +19,6 @@ public class TestCodedDanger extends CodedDanger {
      *            The cause.
      */
     public TestCodedDanger(int code, Throwable cause) {
-        super(bundles, code, cause);
+        super(code, cause);
     }
 }

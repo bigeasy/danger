@@ -17,7 +17,7 @@ package com.goodworkalan.danger;
  */
 @SuppressWarnings("serial")
 public class ContextualDanger extends Danger {
-	/** The message key. */
+    /** The message key. */
     private final String messageKey;
 
     /**
@@ -36,26 +36,26 @@ public class ContextualDanger extends Danger {
         this.messageKey = getMessageKey(contextClass, code);
     }
     
-	/**
-	 * Get the message key, which is the context class name catenated with the
-	 * string code.
-	 * 
-	 * @return The message key.
-	 */
+    /**
+     * Get the message key, which is the context class name catenated with the
+     * string code.
+     * 
+     * @return The message key.
+     */
     public String getMessageKey() {
         return messageKey;
     }
 
-	/**
-	 * Create the qualified message key by contenting the context class name
-	 * with the message code.
-	 * 
-	 * @param contextClass
-	 *            The context class.
-	 * @param code
-	 *            The message code.
-	 * @return The qualified message key.
-	 */
+    /**
+     * Create the qualified message key by contenting the context class name
+     * with the message code.
+     * 
+     * @param contextClass
+     *            The context class.
+     * @param code
+     *            The message code.
+     * @return The qualified message key.
+     */
     private static String getMessageKey(Class<?> contextClass, String code) {
         String className = contextClass.getCanonicalName();
         int dot = className.lastIndexOf('.');

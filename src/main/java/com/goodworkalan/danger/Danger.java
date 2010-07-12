@@ -1,9 +1,7 @@
 package com.goodworkalan.danger;
 
-import java.util.HashMap;
-import java.util.Map;
-
-import com.goodworkalan.verbiage.Message;
+import java.util.Locale;
+import java.util.ResourceBundle;
 
 /**
  * Base class for exceptions with arbitrary diagnostic data and formatted
@@ -11,76 +9,144 @@ import com.goodworkalan.verbiage.Message;
  * 
  * @author Alan Gutierrez
  */
-@SuppressWarnings("serial")
 public class Danger extends RuntimeException {
-    /** The formatted message. */
-    private final Message message;
+    /** Serial version id. */
+    private static final long serialVersionUID = -1L;
     
-    /** The map of format arguments. */
-    private final Map<Object, Object> data;
+    /** The message context class. */
+    public final Class<?> contextClass;
+    
+    /** The message error code. */
+    public final String code;
+
+    /**
+     * Create an exception with the given context class and message code, using
+     * the given format arguments to create the exception message.
+     * 
+     * @param cause
+     *            The cause.
+     * @param contextClass
+     *            The context class.
+     * @param code
+     *            The key of the message in the message bundle.
+     * @param arguments
+     *            The format arguments.
+     */
+    public Danger(Class<?> contextClass, String code, Object...arguments) {
+        this(null, contextClass, code, arguments);
+    }
 
     /**
      * Create an exception with the given context class, message key and cause,
      * using the given format arguments to create the exception message.
      * 
-     * @param contextClass
-     *            The context class.
-     * @param messageKey
-     *            The key of the message in the message bundle.
      * @param cause
      *            The cause.
+     * @param contextClass
+     *            The context class.
+     * @param code
+     *            The key of the message in the message bundle.
      * @param arguments
      *            The format arguments.
      */
-    public Danger(Class<?> contextClass, String messageKey, Throwable cause, Object...arguments) {
-        super(null, cause);
-        this.data = Message.position(new HashMap<Object, Object>(), arguments); 
-        this.message = new Message(getBundleContext(contextClass).getCanonicalName(), "exceptions", messageKey, this.data);
+    public Danger(Throwable cause, Class<?> contextClass, String code, Object...arguments) {
+        super(format(contextClass, code, arguments), cause);
+        this.contextClass = contextClass; 
+        this.code = code;
     }
 
+
     /**
-     * Get the context class using either the given context class or this class,
-     * if the given context class is null.
+     * Format the exception message using the message arguments to format the
+     * message found with the message key in the message bundle found in the
+     * package of the given context class.
      * 
      * @param contextClass
      *            The context class.
-     * @return The context class or this class if the context class is null.
+     * @param code
+     *            The error code.
+     * @param arguments
+     *            The format message arguments.
+     * @return The formatted message.
      */
-    private Class<?> getBundleContext(Class<?> contextClass) {
-        return contextClass == null ? getClass() : contextClass;
+    public final static String _(Class<?> contextClass, String code, Object...arguments) {
+        String baseName = contextClass.getPackage().getName() + ".exceptions";
+        String messageKey = contextClass.getSimpleName() + "/" + code;
+        try {
+            ResourceBundle bundle = ResourceBundle.getBundle(baseName, Locale.getDefault(), Thread.currentThread().getContextClassLoader());
+            return String.format((String) bundle.getObject(messageKey), arguments);
+        } catch (Exception e) {
+            return String.format("Cannot load message key [%s] from bundle [%s] becuase [%s].", messageKey, baseName, e.getMessage());
+        }
     }
 
     /**
-     * Put the given name and value into the map of exception data. The map of
-     * exception data can be referenced from the format arguments of verbiage.
+     * Format the exception message using the message arguments to format the
+     * message found with the message key in the message bundle found in the
+     * package of the given context class.
      * 
-     * @param name
-     *            The name.
-     * @param value
-     *            The value.
-     * @return This exception to permit method chaining.
+     * @param contextClass
+     *            The context class.
+     * @param code
+     *            The error code.
+     * @param arguments
+     *            The format message arguments.
+     * @return The formatted message.
      */
-    public Danger put(Object name, Object value) {
-        data.put(name, value);
-        return this;
+    public static String format(Class<?> contextClass, String code, Object...arguments) {
+        return _(contextClass, code, arguments);
     }
 
     /**
-     * Get the map of exception information.
+     * Return true if the exception is in the context of the given context
+     * class.
      * 
-     * @return The map of exception information.
+     * @param contextClass
+     *            The context class.
+     * @return true if the exception is in the context of the given context
+     *         class.
+     * 
      */
-    public Map<Object, Object> getData() {
-        return data;
+    public boolean in(Class<?> contextClass) {
+        return this.contextClass.equals(contextClass);
     }
-    
+
     /**
-     * Get the formatted exception message.
+     * Return true if the message code is equal to the give message code.
      * 
-     * @return The exception message.
+     * @param code
+     *            The message code.
+     * @return True if the message code is equal to the give message code.
      */
-    @Override
-    public String getMessage() {
-        return message.toString();
+    public boolean is(String code) {
+        return this.code.equals(code);
+    }
+
+    /**
+     * Throw this exception if the context class is not the given class or if
+     * the list of codes is not empty and no code equals a code in the list of
+     * codes.
+     * 
+     * @param contextClass
+     *            The context class.
+     * @param codes
+     *            The list of codes.
+     */
+    public void throwIfNot(Class<?> contextClass, String...codes) {
+        boolean raise = true;
+        if (this.contextClass.equals(contextClass)) {
+            int stop = codes.length;
+            raise = stop > 0;
+            if (raise) {
+                for (int i = 0; raise && i < stop; i++) {
+                    if (codes[i].equals(code)) {
+                        raise = false;
+                    }
+                }
+            }
+        }
+        if (raise) {
+            throw this;
+        }
     }
 }

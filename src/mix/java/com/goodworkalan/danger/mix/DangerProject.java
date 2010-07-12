@@ -19,7 +19,7 @@ public class DangerProject implements ProjectModule {
     public void build(Builder builder) {
         builder
             .cookbook(JavaProject.class)
-                .produces("com.github.bigeasy.danger/danger/0.1.0.3")
+                .produces("com.github.bigeasy.danger/danger/0.3.0.0")
                 .depends()
                     .production("com.github.bigeasy.verbiage/verbiage/0.+1")
                     .development("org.testng/testng-jdk15/5.10")

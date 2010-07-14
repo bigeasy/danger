@@ -74,7 +74,7 @@ public class Danger extends RuntimeException {
         String messageKey = contextClass.getSimpleName() + "/" + code;
         try {
             ResourceBundle bundle = ResourceBundle.getBundle(baseName, Locale.getDefault(), Thread.currentThread().getContextClassLoader());
-            return String.format((String) bundle.getObject(messageKey), arguments);
+            return String.format((String) bundle.getObject(messageKey), getClassName(arguments));
         } catch (Exception e) {
             return String.format("Cannot load message key [%s] from bundle [%s] becuase [%s].", messageKey, baseName, e.getMessage());
         }
@@ -149,4 +149,24 @@ public class Danger extends RuntimeException {
             throw this;
         }
     }
+
+    /**
+     * Convert any classes in the format arguments to the value of their
+     * <code>getName()</code> method since the default implementation of
+     * <code>toString()</code> for classes annoys me.
+     * 
+     * @param arguments
+     *            The format arguments.
+     * @return The format arguments with any classes converted to their class
+     *         names.
+     */
+    private static Object[] getClassName(Object...arguments) {
+        for (int i = 0; i < arguments.length; i++) {
+            if (arguments[i] instanceof Class<?>) {
+                arguments[i] = ((Class<?>) arguments[i]).getName();
+            }
+        }
+        return arguments;
+    }
+
 }

@@ -1,0 +1,70 @@
+/* LESS Stylesheet for Reflective. */
+
+@import 'blueprint/screen.css';
+
+@yellow: #ffec4d;
+@gray: #4d5e5f;
+@red: #ef6738;
+
+.span (@columns: 1, @deduction: 0) {
+    .column;
+    width: (40px * @columns - 10px) - @deduction;
+}
+
+.left(@columns: 1) {
+  margin-left: (40px * @columns);
+}
+
+.right(@columns: 1) {
+  margin-right: (40px * @columns);
+}
+
+.border-top-left-radius (@radius: 5px) {
+  -moz-border-radius-topleft: @radius;
+  -webkit-border-top-left-radius: @radius;
+  border-top-left-radius: @radius;
+}
+
+.border-top-right-radius (@radius: 5px) {
+  -moz-border-radius-topright: @radius;
+  -webkit-border-top-right-radius: @radius;
+  border-top-right-radius: @radius;
+}
+
+.border-bottom-right-radius (@radius: 5px) {
+  -moz-border-radius-bottomright: @radius;
+  -webkit-border-bottom-right-radius: @radius;
+  border-bottom-right-radius: @radius;
+}
+
+.border-bottom-left-radius (@radius: 5px) {
+  -moz-border-radius-bottomleft: @radius;
+  -webkit-border-bottom-left-radius: @radius;
+  border-bottom-left-radius: @radius;
+}
+
+.border-radius (@radius: 5px) {
+  -moz-border-radius: @radius;
+  -webkit-border-radius: @radius;
+  border-radius: @radius;
+}
+
+body {
+    text-align: center;
+    background: @yellow;
+}
+
+#content {
+    .span(24, 16); .last;
+
+    background-color: white;
+    text-align: left;
+    margin-top: 2em;
+    border: 8px solid @red;
+
+    #article {
+        .left(7); .span(16, 16); .right(1);
+        letter-spacing: 0.1em;
+    }
+}
+

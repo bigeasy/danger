@@ -3,6 +3,10 @@ package com.goodworkalan.danger.test;
 import static com.goodworkalan.danger.test.Dangerous.danger;
 import static java.util.regex.Pattern.compile;
 
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.sql.SQLException;
+
 import org.testng.annotations.Test;
 
 import com.goodworkalan.danger.Danger;
@@ -28,7 +32,7 @@ public class DangerousTest {
             public void run() {
                 throw new Danger(Widget.class, "badness", "Eek");
             }
-        }, Widget.class, "badness", "Eek! Something bad happened.");
+        }, Widget.class, "badness", null, "Eek! Something bad happened.");
     }
     
     /**
@@ -40,7 +44,39 @@ public class DangerousTest {
         danger(new Runnable() {
             public void run() {
             }
-        }, Widget.class, "badness", "Eek! Something bad happened.");
+        }, Widget.class, "badness", null, "Eek! Something bad happened.");
+    }
+    
+    /**
+     * No assertion triggered if the exception cause is null and the expected
+     * cause is null.
+     */
+    @Test
+    public void assertNoCause() {
+        Dangerous.assertCause(new Danger(Dangerous.class, "none"), null);
+    }
+
+    /**
+     * An assertion is triggered if the exception cause is not null and the
+     * expected cause is null.
+     */
+    @Test(expectedExceptions = java.lang.AssertionError.class)
+    public void failedAssertNoCause() {
+        Dangerous.assertCause(new Danger(new IOException(), Dangerous.class, "none"), null);
+    }
+
+    /**
+     * No assertion triggered if the exception cause is assignable to the
+     * expected cause.
+     */
+    @Test
+    public void assertCauseType() {
+        Dangerous.assertCause(new Danger(new FileNotFoundException(), Dangerous.class, "none"), IOException.class);
+    }
+    
+    @Test(expectedExceptions = java.lang.AssertionError.class)
+    public void failedAssertCauseType() {
+        Dangerous.assertCause(new Danger(new FileNotFoundException(), Dangerous.class, "none"), SQLException.class);
     }
     
     /**
@@ -52,7 +88,7 @@ public class DangerousTest {
             public void run() {
                 throw new Danger(Widget.class, "badness", "Eek");
             }
-        }, Widget.class, "badness", compile("Eek! Something bad happened."));
+        }, Widget.class, "badness", null, compile("Eek! Something bad happened."));
     }
     
     /**
@@ -64,6 +100,6 @@ public class DangerousTest {
         danger(new Runnable() {
             public void run() {
             }
-        }, Widget.class, "badness", compile( "Eek! Something bad happened."));
+        }, Widget.class, "badness", null, compile( "Eek! Something bad happened."));
     }
 }

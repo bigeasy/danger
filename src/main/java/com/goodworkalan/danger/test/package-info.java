@@ -1,3 +1,3 @@
-/** Unit test code that throws {@link Danger} exceptions. */
+/** Unit test code that throws <code>Danger</code> exceptions. */
 package com.goodworkalan.danger.test;
 

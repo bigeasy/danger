@@ -13,17 +13,28 @@ import com.goodworkalan.danger.Danger;
  * @author Alan Gutierrez
  */
 public class DangerousTest {
-    /** Test against a message. */
+    /**
+     * Construct an instance of the {@link Dangerous} class to satisfy coverage.
+     */
     @Test
+    public void constructor() {
+        new Dangerous();
+    }
+
+    /** Assert that the message is as expected and rethrow. */
+    @Test(expectedExceptions = Danger.class)
     public void message() {
         danger(new Runnable() {
             public void run() {
-                throw new Danger(Widget.class, "badnesss", "Eek");
+                throw new Danger(Widget.class, "badness", "Eek");
             }
         }, Widget.class, "badness", "Eek! Something bad happened.");
     }
     
-    /** Test against a message and do not throw an exception. */
+    /**
+     * If no exception is thrown, we expect the expected exception mechanism of
+     * the unit test framework to report it.
+     */
     @Test
     public void messageUnexceptional() {
         danger(new Runnable() {
@@ -32,17 +43,22 @@ public class DangerousTest {
         }, Widget.class, "badness", "Eek! Something bad happened.");
     }
     
-    /** Test against a regular expression. */
-    @Test
+    /**
+     * Assert that the message matches the given regular expression and rethrow.
+     */
+    @Test(expectedExceptions = Danger.class)
     public void regex() {
         danger(new Runnable() {
             public void run() {
-                throw new Danger(Widget.class, "badnesss", "Eek");
+                throw new Danger(Widget.class, "badness", "Eek");
             }
-        }, Widget.class, "badness", compile( "Eek! Something bad happened."));
+        }, Widget.class, "badness", compile("Eek! Something bad happened."));
     }
     
-    /** Test against a regular expression and do not throw an expression. */
+    /**
+     * If no exception is thrown, we expect the expected exception mechanism of
+     * the unit test framework to report it.
+     */
     @Test
     public void regexUnexceptional() {
         danger(new Runnable() {

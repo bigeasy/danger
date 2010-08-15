@@ -1,6 +1,7 @@
 package com.goodworkalan.danger.test;
 
-import static org.testng.Assert.*;
+import static org.testng.Assert.assertEquals;
+import static org.testng.Assert.assertTrue;
 
 import java.util.regex.Pattern;
 

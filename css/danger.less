@@ -11,12 +11,12 @@
     width: (40px * @columns - 10px) - @deduction;
 }
 
-.left(@columns: 1) {
-  margin-left: (40px * @columns);
+.left(@columns: 1, @deduction: 0) {
+  margin-left: (40px * @columns) - @deduction;
 }
 
-.right(@columns: 1) {
-  margin-right: (40px * @columns);
+.right(@columns: 1, @deduction: 0) {
+  margin-right: (40px * @columns) - @deduction;
 }
 
 .border-top-left-radius (@radius: 5px) {
@@ -56,14 +56,36 @@ body {
 
 #content {
     .span(24, 16); .last;
+    .border-radius(40px);
 
     background-color: white;
     text-align: left;
-    margin-top: 2em;
+    margin-top: 3em;
     border: 8px solid @red;
 
+    .header {
+        .left(1, 8); .span(22); .right(1, 8);
+
+        margin-top: 28px;
+
+        .left {
+            .span(8);
+            .border-top-left-radius(10px);
+
+            background-color: @gray;
+            height: 7.5em;
+        }
+        .right {
+            .span(14); .last;
+            .border-top-right-radius(10px);
+
+            background-color: @gray;
+            height: 7.5em;
+        }
+    }
+
     #article {
-        .left(7); .span(16, 16); .right(1);
+        .left(9, 8); .span(13); .right(1, 8);
         letter-spacing: 0.1em;
     }
 }
